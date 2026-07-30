@@ -8,7 +8,7 @@ app = Flask(__name__)
 tareas = []
 contador_id = 1
 
-# HTML simple para la interfaz (incrustado para simplificar)
+# HTML simple para la interfaz
 HTML_TEMPLATE = """
 <!DOCTYPE html>
 <html>
@@ -22,7 +22,7 @@ HTML_TEMPLATE = """
     </style>
 </head>
 <body>
-    <h1>📋 Mis Tareas</h1>
+    <h1>Mis Tareas</h1>
     <form action="/agregar" method="post">
         <input type="text" name="descripcion" placeholder="Nueva tarea" required>
         <button type="submit">Agregar</button>
@@ -34,17 +34,17 @@ HTML_TEMPLATE = """
                 {{ tarea.descripcion }}
             </span>
             {% if not tarea.completada %}
-                <a href="/completar/{{ tarea.id }}">✅ Completar</a>
+                <a href="/completar/{{ tarea.id }}">Completar</a>
             {% else %}
-                <span>✅ Hecho</span>
+                <span>Hecho</span>
             {% endif %}
-            <a href="/eliminar/{{ tarea.id }}">🗑️ Eliminar</a>
+            <a href="/eliminar/{{ tarea.id }}">Eliminar</a>
         </li>
         {% endfor %}
     </ul>
     {% if consejo %}
         <hr>
-        <h3>🎉 ¡Bien hecho! Consejo del día:</h3>
+        <h3>¡Bien hecho! Consejo del día:</h3>
         <p><em>"{{ consejo }}"</em></p>
     {% endif %}
 </body>
@@ -53,7 +53,7 @@ HTML_TEMPLATE = """
 
 @app.route('/')
 def index():
-    # Si hay un consejo en la sesión (usamos query param para simplificar)
+    # Si hay un consejo en la sesión
     consejo = request.args.get('consejo', None)
     return render_template_string(HTML_TEMPLATE, tareas=tareas, consejo=consejo)
 
